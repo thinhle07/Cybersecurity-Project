@@ -14,6 +14,7 @@ A Python-based program used for Steganography, Text Encryption/Decryption, Water
 
 ## Directories
 MyStego/
+
 ├── data_encryption.py        
 ├── image_steganography.py      
 ├── watermarking.py         
