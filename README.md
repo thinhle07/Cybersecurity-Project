@@ -24,9 +24,20 @@ MyStego/
 └── requirements.txt    
 
 ## Usage
-**Steganography**
-In embed tab, select an image from your device, then enter messages and security key to process.
-In unembed tab, select the image with hidden messages, then enter the security key to process. The process will take roughly 20-30 seconds to complete. 
+#### Steganography
+In Embed tab, select an image from your device, then enter messages and security key to process.
+In Unembed tab, select the image with hidden messages, then enter the security key to process. The process will take roughly 20-30 seconds to complete. 
 
-**Messages encryption and decryption**
+#### Messages encryption and decryption
+In Encrypt tab, enter the messages and the security key to process.
+In Decrypt tab, enter the encrypted text and the security key to decrypt.
 
+#### Watermarking
+In Watermark tab, choose an image from your device for watermarking, enter the text which will be marked into the image.
+
+#### Settings
+It is able to change the night/light theme in the settings.
+It is able to choose the cryptography algorithms in the settings.
+**Attention:**
+In the steganography, except the situation the length of text excess the capacity of the image, the data should follow these requirements:
+    In AES algorithm, the entered data should not excess 16 bytes (128 bits) length.
