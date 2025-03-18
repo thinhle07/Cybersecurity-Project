@@ -38,7 +38,8 @@ In Watermark tab, choose an image from your device for watermarking, enter the t
 #### Settings
 It is able to change the night/light theme in the settings.
 It is able to choose the cryptography algorithms in the settings.
+
 **Attention:**
 In the steganography, except the situation the length of text excess the capacity of the image, the data should follow these requirements:
-    In AES algorithm, the entered data should not excess 16 bytes (128 bits) length.
-    In Blowfish algorithm, the entered data should be more than 8 bytes (64 bits) length.
+- In AES algorithm, the entered data should not excess 16 bytes (128 bits) length.
+- In Blowfish algorithm, the entered data should be more than 8 bytes (64 bits) length.
