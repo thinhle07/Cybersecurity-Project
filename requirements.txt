@@ -1,0 +1,8 @@
+Customtkinter 
+`pip install customtkinter`
+
+Python Image Library 
+`pip install pillow`
+
+Pycryptodome 
+`pip install pycryptodome`
