@@ -12,6 +12,16 @@ A Python-based program used for Steganography, Text Encryption/Decryption, Water
 2. Install requirements: check requirements.txt
 3. Run: `python main.py`
 
+## Directories
+MyStego/
+├── data_encryption.py        
+├── image_steganography.py      
+├── watermarking.py         
+├── gui.py               
+├── main.py              
+├── README.md             
+└── requirements.txt    
+
 ## Usage
 **Steganography**
 In embed tab, select an image from your device, then enter messages and security key to process.
