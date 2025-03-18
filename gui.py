@@ -6,7 +6,7 @@ from Crypto.Cipher import AES, DES, Blowfish
 from Crypto.Util.Padding import pad, unpad
 import base64
 from data_encryption import encrypt_phrase, decrypt_phrase
-from watermarking import add_watermark, remove_watermark
+from watermarking import add_watermark
 from image_steganography import encode_image, extract_data_from_image, decrypt_data
 
 class SteganographyApp:
@@ -95,7 +95,6 @@ class SteganographyApp:
             "🔒 Encrypt": lambda: self.switch_tab("🔒 Phrase Encryption"),
             "🔓 Decrypt": lambda: self.switch_tab("🔓 Phrase Decryption"),
             "💧 Watermark": lambda: self.switch_tab("💧 Watermark Image"),
-            "🚫 Demark": lambda: self.switch_tab("🚫 Remove Watermark"),
             "⚙️ Settings": self.show_settings_page,  
             "🏠 Home": self.show_beginning_page
         }
@@ -128,13 +127,11 @@ class SteganographyApp:
         self.tabview.add("🔒 Phrase Encryption")
         self.tabview.add("🔓 Phrase Decryption")
         self.tabview.add("💧 Watermark Image")
-        self.tabview.add("🚫 Remove Watermark")
         self.create_encode_tab(self.tabview.tab("📥 Embed Message"))
         self.create_decode_tab(self.tabview.tab("📤 Unembed Message"))
         self.create_phrase_encryption_tab(self.tabview.tab("🔒 Phrase Encryption"))
         self.create_phrase_decryption_tab(self.tabview.tab("🔓 Phrase Decryption"))
         self.create_watermark_tab(self.tabview.tab("💧 Watermark Image"))
-        self.create_remove_watermark_tab(self.tabview.tab("🚫 Remove Watermark"))
 
         self.tooltip = ctk.CTkLabel(self.root, text="", font=("Helvetica", 10), corner_radius=5, fg_color="#FFFF99")
         self.tooltip.place_forget()
@@ -249,18 +246,6 @@ class SteganographyApp:
         self.watermark_output_path_label = ctk.CTkLabel(tab, text="", text_color="blue")
         self.watermark_output_path_label.pack(pady=5)
 
-    def create_remove_watermark_tab(self, tab):
-        ctk.CTkLabel(tab, text="Selected Watermarked Image:").pack(pady=5)
-        self.remove_watermark_image_display = ctk.CTkLabel(tab, text="")
-        self.remove_watermark_image_display.pack(pady=5)
-        ctk.CTkButton(tab, text="🖼 Browse", command=self.select_image_remove_watermark, corner_radius=10).pack(pady=5)
-        ctk.CTkLabel(tab, text="Enter Original Watermark Text:").pack(pady=5)
-        self.remove_watermark_text_entry = ctk.CTkEntry(tab, width=300)
-        self.remove_watermark_text_entry.pack(pady=5)
-        ctk.CTkButton(tab, text="🚫 Remove Watermark", command=self.remove_watermark, corner_radius=10).pack(pady=10)
-        self.remove_watermark_output_path_label = ctk.CTkLabel(tab, text="", text_color="blue")
-        self.remove_watermark_output_path_label.pack(pady=5)
-
     def resize_image(self, image_path, max_size=(200, 200)):
         image = Image.open(image_path)
         image.thumbnail(max_size, Image.Resampling.LANCZOS)
@@ -286,13 +271,6 @@ class SteganographyApp:
             photo = self.resize_image(self.watermark_image_path)
             self.watermark_image_display.configure(image=photo)
             self.watermark_image_display.image = photo
-
-    def select_image_remove_watermark(self):
-        self.remove_watermark_image_path = filedialog.askopenfilename(filetypes=[("Image Files", "*.png;*.jpg;*.jpeg;*.bmp")])
-        if self.remove_watermark_image_path:
-            photo = self.resize_image(self.remove_watermark_image_path)
-            self.remove_watermark_image_display.configure(image=photo)
-            self.remove_watermark_image_display.image = photo
 
     def encode_data(self):
         if not hasattr(self, 'image_path'):
@@ -398,22 +376,3 @@ class SteganographyApp:
             messagebox.showinfo("Success", "Watermark applied successfully!")
         else:
             self.status_bar.configure(text="Error applying watermark.")
-
-    def remove_watermark(self):
-        if not hasattr(self, 'remove_watermark_image_path'):
-            messagebox.showerror("Error", "Please select a watermarked image first.")
-            return
-        output_path = filedialog.asksaveasfilename(defaultextension=".png", filetypes=[("PNG Files", "*.png")])
-        if not output_path:
-            return
-        watermark_text = self.remove_watermark_text_entry.get().strip()
-        if not watermark_text:
-            messagebox.showerror("Error", "Please enter the watermark text to remove.")
-            return
-        success = remove_watermark(self.remove_watermark_image_path, watermark_text, output_path)
-        if success:
-            self.remove_watermark_output_path_label.configure(text=f"File saved at: {output_path}")
-            self.status_bar.configure(text="Watermark removal attempted successfully!")
-            messagebox.showinfo("Success", "Watermark removal attempted! Note: This is a basic crop-based removal.")
-        else:
-            self.status_bar.configure(text="Error removing watermark.")
