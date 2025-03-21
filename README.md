@@ -1,4 +1,4 @@
-# Cybersecurity-Project
+# My Stego
 A Python-based program used for Steganography, Text Encryption/Decryption, Watermarking.
 
 ## Features
